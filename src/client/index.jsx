@@ -5,6 +5,7 @@ import {Login} from "./pages/login/login";
 import {Register} from "./pages/login/register";
 import {getJSON} from "./utils/api/getJSON";
 import {Activities} from "./pages/activities";
+import {ManagerPage} from "./pages/manager/managerPage";
 
 const element = document.getElementById("app");
 const root = createRoot(element);
@@ -70,6 +71,7 @@ function Application() {
             <Route path={"/"} element={<FrontPage />}></Route>
             <Route path={"/login/"} element={<Login />}></Route>
             <Route path={"/register/"} element={<Register />}></Route>
+            <Route path={"/manager/*"} element={<ManagerPage/>}></Route>
         </Routes>
     </BrowserRouter>
   );

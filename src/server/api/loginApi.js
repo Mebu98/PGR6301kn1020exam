@@ -18,6 +18,10 @@ loginApi.post("/register", (req, res) =>{
         return res.sendStatus(409);
     }
 
+    if (username.length < 3 || password.length < 3) {
+        return res.sendStatus(400);
+    }
+
     USERS.push({username, name, role: "none", password});
     res.sendStatus(200);
 });

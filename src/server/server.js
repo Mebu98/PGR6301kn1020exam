@@ -27,7 +27,7 @@ app.use((req, res, next) => {
 });
 
 app.use("/api/login", loginApi);
-app.use("/api/activties", activitiesApi);
+app.use("/api/activities", activitiesApi);
 
 const server = app.listen( process.env.PORT || 3000, () =>
 {
