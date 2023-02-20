@@ -1,4 +1,12 @@
+function ListActivities() {
+    return null;
+}
+
 export function Activities(){
-    return <h1> Welcome to Activities </h1>;
+    return (
+        <div>
+            <ListActivities />
+        </div>
+    );
 
 }

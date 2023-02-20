@@ -1,6 +1,6 @@
 import express from "express";
 
-export const loginPath = new express.Router();
+export const loginApi = new express.Router();
 
 const USERS = [
     {
@@ -11,7 +11,7 @@ const USERS = [
     }];
 
 // Register user
-loginPath.post("/register", (req, res) =>{
+loginApi.post("/register", (req, res) =>{
     const { username, name, password } = req.body;
     // Check if user exists
     if(USERS.find(u => u.username === username)){
@@ -23,7 +23,7 @@ loginPath.post("/register", (req, res) =>{
 });
 
 //check if user is logged in via cookie
-loginPath.get("/", (req, res) =>{
+loginApi.get("/", (req, res) =>{
         const cookieUsername = req.signedCookies.username;
         if(!cookieUsername) {
             return res.sendStatus(401);
@@ -36,7 +36,7 @@ loginPath.get("/", (req, res) =>{
 });
 
 // Login
-loginPath.post("/", (req, res) =>{
+loginApi.post("/", (req, res) =>{
     const { username, password } = req.body;
 
     const user = USERS.find(u => u.username === username);
@@ -50,7 +50,7 @@ loginPath.post("/", (req, res) =>{
 });
 
 // Logout
-loginPath.delete("/", (req, res) =>{
+loginApi.delete("/", (req, res) =>{
     res.clearCookie("username");
     res.sendStatus(200);
 });

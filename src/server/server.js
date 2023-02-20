@@ -1,9 +1,11 @@
 import express from "express";
 import bodyParser from "express";
-import {loginPath} from "./api/loginApi.js";
 import dotenv from "dotenv";
 import cookieParser from "cookie-parser";
 import * as path from "path";
+
+import {loginApi} from "./api/loginApi.js";
+import {activitiesApi} from "./api/activitiesApi.js";
 dotenv.config();
 
 const app = express();
@@ -24,7 +26,8 @@ app.use((req, res, next) => {
     }
 });
 
-app.use("/api/login", loginPath);
+app.use("/api/login", loginApi);
+app.use("/api/activties", activitiesApi);
 
 const server = app.listen( process.env.PORT || 3000, () =>
 {
