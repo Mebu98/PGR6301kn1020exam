@@ -6,30 +6,38 @@ const USERS = [
     {
         username: "user",
         name: "userUserson",
-        password: "user",
+        role: "manager",
+        password: "user"
     }];
 
-loginPath.get("/", (req, res) =>{
-    function respond() {
-            const cookieUsername = req.signedCookies.username;
-            if(!cookieUsername) {
-                return res.sendStatus(401);
-            }
+// Register user
+loginPath.post("/register", (req, res) =>{
+    const { username, name, password } = req.body;
+    // Check if user exists
+    if(USERS.find(u => u.username === username)){
+        return res.sendStatus(409);
+    }
 
-            const user = USERS.find(u => u.username === cookieUsername);
-            const {username, name } = user;
-
-            res.json({username, name});
-        }
-    setTimeout(respond, 3000);
+    USERS.push({username, name, role: "none", password});
+    res.sendStatus(200);
 });
 
+//check if user is logged in via cookie
+loginPath.get("/", (req, res) =>{
+        const cookieUsername = req.signedCookies.username;
+        if(!cookieUsername) {
+            return res.sendStatus(401);
+        }
+
+        const user = USERS.find(u => u.username === cookieUsername);
+        const {username, name , role} = user;
+
+        res.json({username, name, role});
+});
+
+// Login
 loginPath.post("/", (req, res) =>{
-
-    console.log("getting this far");
-
     const { username, password } = req.body;
-    console.log(req.body);
 
     const user = USERS.find(u => u.username === username);
 
@@ -39,12 +47,10 @@ loginPath.post("/", (req, res) =>{
     } else {
         res.sendStatus(401);
     }
+});
 
-
-    function loginMiddleware(req, res, next) {
-        res.user = USERS.find(u => u.username === req.username);
-        next();
-    }
-
-    loginPath.use(loginMiddleware);
+// Logout
+loginPath.delete("/", (req, res) =>{
+    res.clearCookie("username");
+    res.sendStatus(200);
 });

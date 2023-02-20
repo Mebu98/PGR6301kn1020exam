@@ -1,4 +1,5 @@
 import {useState} from "react";
+import {postJSON} from "../../utils/api/postJSON";
 
 function LoginForm() {
     const [username, setUsername] = useState("");
@@ -7,14 +8,15 @@ function LoginForm() {
 
     async function handleLoginSubmit(e) {
         e.preventDefault();
-        const result = await fetch("/api/login", {
-            method: "POST",
-            headers: {
-                "content-type": "application/json",
-            },
-            body: JSON.stringify({username, password})
+
+        await postJSON("api/login", {username, password}).then((res) => {
+            if (res === 200){
+                window.location.href = "/";
+            }
+            else if (res === 401){
+                alert("Username or password is incorrect");
+            }
         });
-        console.log(result);
     }
 
     return (
@@ -24,7 +26,7 @@ function LoginForm() {
                     <label>Username: <input value={username} onChange={e => setUsername(e.target.value)}/></label>
                 </div>
                 <div>
-                    <label>Password: <input value={password} onChange={e => setPassword(e.target.value)}/></label>
+                    <label>Password: <input type={"password"} value={password} onChange={e => setPassword(e.target.value)}/></label>
                 </div>
                 <button type="submit">Login</button>
             </form>
