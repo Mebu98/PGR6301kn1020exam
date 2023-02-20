@@ -11,13 +11,17 @@ function ListActivities() {
     if (loading) return <p>Loading...</p>;
     if (error) return <p>Error :(</p>;
 
-    return activities.map(({ id, name, description }) => (
-        <div key={id}>
-            <p>
-                {id}: {name} {description}
-            </p>
-        </div>
-    ));
+    return (
+        <div>
+            <ul id={"activities-list"}>
+                {activities.map(({ _id, name, description }) => (
+                <li key={_id}>
+                    <span>
+                        {_id}: {name} {description}
+                    </span>
+                </li>))}
+            </ul>
+        </div>);
 }
 
 export function Activities(){

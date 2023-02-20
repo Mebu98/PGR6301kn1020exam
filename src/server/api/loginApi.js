@@ -1,60 +1,78 @@
 import express from "express";
+import {ObjectId} from "mongodb";
 
-export const loginApi = new express.Router();
 
-const USERS = [
-    {
-        username: "user",
-        name: "userUserson",
-        role: "manager",
-        password: "user"
-    }];
+export function LoginApi(db){
+    const loginApi = express.Router();
 
-// Register user
-loginApi.post("/register", (req, res) =>{
-    const { username, name, password } = req.body;
-    // Check if user exists
-    if(USERS.find(u => u.username === username)){
-        return res.sendStatus(409);
-    }
+    const USERS = [
+        {
+            username: "user",
+            name: "userUserson",
+            role: "manager",
+            password: "user"
+        }];
 
-    if (username.length < 3 || password.length < 3) {
-        return res.sendStatus(400);
-    }
+    // Register user
+    loginApi.post("/register", async (req, res) => {
+        const {username, name, password} = req.body;
 
-    USERS.push({username, name, role: "none", password});
-    res.sendStatus(200);
-});
+        // Check if user exists
+        const users = await db
+            .collection("users")
+            .find({username: username})
+            .toArray();
 
-//check if user is logged in via cookie
-loginApi.get("/", (req, res) =>{
-        const cookieUsername = req.signedCookies.username;
-        if(!cookieUsername) {
+        if(users.length > 0){
+            res.sendStatus(409);
+            return;
+        }
+
+        // insert user into database
+        db.collection("users").insertOne({username, name, password, role: "undefined"});
+
+        res.sendStatus(200);
+    });
+
+    //check if user is logged in via cookie
+    loginApi.get("/", async (req, res) => {
+        const userIdCookie = req.signedCookies.userId;
+        if (!userIdCookie) {
             return res.sendStatus(401);
         }
 
-        const user = USERS.find(u => u.username === cookieUsername);
-        const {username, name , role} = user;
+        const user = await db.collection("users")
+            .findOne({_id: new ObjectId(userIdCookie)});
 
-        res.json({username, name, role});
-});
+        if (!user) {
+            return res.sendStatus(401);
+        }
+        res.send(user)
+    });
 
-// Login
-loginApi.post("/", (req, res) =>{
-    const { username, password } = req.body;
+    // Login
+    loginApi.post("/", async (req, res) => {
+        const {username, password} = req.body;
 
-    const user = USERS.find(u => u.username === username);
+        const user = await db.collection("users")
+            .findOne({username: username});
 
-    if(user && user.password === password){
-        res.cookie("username", username, {signed : true});
+        if (user && user.password === password) {
+            res.cookie("userId", user._id, {signed: true});
+            res.cookie("role", user.role, {signed: true});
+            res.sendStatus(200);
+        } else {
+            res.sendStatus(401);
+        }
+    });
+
+    // Logout
+    loginApi.delete("/", (req, res) =>{
+        res.clearCookie("userId");
+        res.clearCookie("role");
         res.sendStatus(200);
-    } else {
-        res.sendStatus(401);
-    }
-});
+    });
 
-// Logout
-loginApi.delete("/", (req, res) =>{
-    res.clearCookie("username");
-    res.sendStatus(200);
-});
+    return loginApi;
+}
+

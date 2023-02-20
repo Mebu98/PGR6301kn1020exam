@@ -1,10 +1,12 @@
 import React from "react";
 import {useState} from "react";
 import {postJSON} from "../../utils/api/postJSON.jsx";
+import {Link} from "react-router-dom";
 
 export function Register() {
   return (
       <div>
+          <Link to={"/"}>Home</Link>
           <h1> Welcome to register </h1>
           <RegisterForm />
       </div>

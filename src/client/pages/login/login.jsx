@@ -1,6 +1,7 @@
 import React from "react";
 import {useState} from "react";
 import {postJSON} from "../../utils/api/postJSON";
+import {Link} from "react-router-dom";
 
 function LoginForm() {
     const [username, setUsername] = useState("");
@@ -12,7 +13,7 @@ function LoginForm() {
 
         await postJSON("api/login", {username, password}).then((res) => {
             if (res === 200){
-                window.location.href = "/";
+                //window.location.href = "/";
             }
             else if (res === 401){
                 alert("Username or password is incorrect");
@@ -38,6 +39,7 @@ function LoginForm() {
 export function Login(){
     return (
         <div>
+            <Link to={"/"}>Home</Link>
             <h1> Welcome to login </h1>
             <LoginForm />
         </div>

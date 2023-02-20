@@ -26,6 +26,14 @@ function LogOut(){
     );
 }
 
+function ManagerLinks() {
+    return (
+        <div>
+            <Link to={"/manager"}>Manager section</Link>
+        </div>
+    );
+}
+
 function FrontPage() {
     const {loading, data} =  useLoader(async () => await getJSON("/api/login"));
     const user = data;
@@ -36,13 +44,14 @@ function FrontPage() {
 
     return (
         <div>
+            <Link to={"/"}>Home</Link>
             <h1>Hello FrontPage</h1>
             {user ?
                 <div>
                     <h1>Hello {user.name}</h1>
                     <LogOut/>
                     <Activities/>
-                    {user.role === "manager" ? <Link to={"/manager"}>Manager section</Link> : null}
+                    {user.role === "manager" ? <ManagerLinks/> : null}
                 </div>
                 :
                 <LoginLinks user={user} />}
@@ -71,7 +80,7 @@ function Application() {
             <Route path={"/"} element={<FrontPage />}></Route>
             <Route path={"/login/"} element={<Login />}></Route>
             <Route path={"/register/"} element={<Register />}></Route>
-            <Route path={"/manager/*"} element={<ManagerPage/>}></Route>
+            <Route path={"/manager/*"} element={<ManagerPage />}></Route>
         </Routes>
     </BrowserRouter>
   );

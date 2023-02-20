@@ -1,13 +1,15 @@
 import {Link, Route, Routes} from "react-router-dom";
-import {useState} from "react";
+import React, {useState} from "react";
 
 function CreateActivity() {
     const [name, setName] = useState("");
     const [description, setDescription] = useState("");
+    const [response, setResponse] = useState(<div></div>);
 
 
     async function handleSubmit(e) {
         e.preventDefault();
+
 
         await fetch("/api/activities/new", {
             method: "POST",
@@ -20,7 +22,19 @@ function CreateActivity() {
             })
         }).then((res) => {
             if(res.ok){
-                window.location.href = "/";
+                // window.location.href = "/";
+                setResponse(
+                    <div>
+                        <h1>Activity {name} created</h1>
+                    </div>
+                );
+            }
+            else{
+                setResponse(
+                    <div>
+                        <h1>{res.statusText}</h1>
+                    </div>
+                );
             }
         });
     }
@@ -33,6 +47,7 @@ function CreateActivity() {
                 <div> Description: <input type={"text"} value={description} onChange={e => setDescription(e.target.value)}/> </div>
                 <button type={"submit"}> Create </button>
             </form>
+            {response}
         </div>
     );
 }
@@ -40,6 +55,7 @@ function CreateActivity() {
 export function ManagerPage() {
     return (
         <div>
+            <Link to={"/"}>Home</Link>
             <h1> Welcome to manager section </h1>
             <Link to={"/manager/activities/new"}>Create activity</Link>
 
