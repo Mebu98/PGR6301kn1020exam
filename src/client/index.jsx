@@ -4,7 +4,7 @@ import {useLoader} from "./useLoader";
 import {Login} from "./pages/login/login";
 import {Register} from "./pages/login/register";
 import {getJSON} from "./utils/api/getJSON";
-import {Activities} from "./pages/activities";
+import {Activities} from "./pages/activities/activities";
 import {ManagerPage} from "./pages/manager/managerPage";
 
 const element = document.getElementById("app");
@@ -26,10 +26,12 @@ function LogOut(){
     );
 }
 
-function ManagerLinks() {
+function ManagerLinks({user}) {
     return (
         <div>
-            <Link to={"/manager"}>Manager section</Link>
+            <Link to="/manager" state={{user: user}}>
+                Manager section
+            </Link>
         </div>
     );
 }
@@ -50,8 +52,8 @@ function FrontPage() {
                 <div>
                     <h1>Hello {user.name}</h1>
                     <LogOut/>
-                    <Activities/>
-                    {user.role === "manager" ? <ManagerLinks/> : null}
+                    <Activities />
+                    {user.role === "manager" ? <ManagerLinks user={user}/> : null}
                 </div>
                 :
                 <LoginLinks user={user} />}
