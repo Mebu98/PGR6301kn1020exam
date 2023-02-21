@@ -4,19 +4,6 @@ import {ObjectId} from "mongodb";
 export function ActivitiesApi(db){
     const activitiesApi = express.Router();
 
-    const SAMPLEACTIVITIES = [
-        {
-            id: 1,
-            name: "Activity 1",
-            description: "Description 1",
-        },
-        {
-            id: 2,
-            name: "Activity 2",
-            description: "Description 2",
-        }
-        ];
-
     // Get all activities
     activitiesApi.get("/", (req, res) => {
         if(db){
@@ -38,11 +25,11 @@ export function ActivitiesApi(db){
              return;
          }
 
-        const { name, description } = req.body;
+        const { name, category, description } = req.body;
 
         if(!name || name.length === 0) return res.sendStatus(400);
 
-        const newActivity = { name, description };
+        const newActivity = { name, category, description };
 
         if(db){
             db.collection("activities").insertOne(newActivity).then(result => {

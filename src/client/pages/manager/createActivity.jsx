@@ -1,9 +1,25 @@
 import React, {useState} from "react";
+import {getJSON} from "../../utils/api/getJSON";
+import {useLoader} from "../../useLoader";
 
 export function CreateActivity() {
     const [name, setName] = useState("");
     const [description, setDescription] = useState("");
+    const [selectedCategory, setSelectedCategory] = useState("");
     const [response, setResponse] = useState(<div></div>);
+
+    const {data, loading , error} = useLoader(
+        async () => await getJSON("/api/login/roles"),
+    []);
+
+    if(loading){
+        return <p>Loading...</p>;
+    }
+    if(error){
+        return <p>Error : {error}</p>;
+    }
+
+    const categories =  data;
 
 
     async function handleSubmit(e) {
@@ -17,7 +33,8 @@ export function CreateActivity() {
             },
             body: JSON.stringify({
                 name,
-                description
+                description,
+                category: selectedCategory
             })
         }).then((res) => {
             if(res.ok){
@@ -42,7 +59,16 @@ export function CreateActivity() {
             <h1> Create activity </h1>
             <form onSubmit={handleSubmit}>
                 <div> Name: <input type={"text"} value={name} onChange={e => setName(e.target.value)}/> </div>
-                <div> Description: <input type={"text"} value={description} onChange={e => setDescription(e.target.value)}/> </div>
+                <div> Description: <textarea onChange={e => setDescription(e.target.value)}/> </div>
+                <div> Category:
+                    <select defaultValue={"Select a category"} onChange={event => setSelectedCategory(event.target.value)}>
+                        <option disabled value={"Select a category"}>Select a category</option>
+                    {categories.map((category) => {
+                    return <option value={category} key={category}>
+                        {category}
+                    </option>
+                    })}
+                </select></div>
                 <button type={"submit"}> Create </button>
             </form>
             {response}

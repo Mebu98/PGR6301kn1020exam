@@ -4,7 +4,7 @@ import dotenv from "dotenv";
 import cookieParser from "cookie-parser";
 import * as path from "path";
 
-import {LoginApi} from "./api/loginApi.js";
+import {UsersApi} from "./api/usersApi.js";
 import {ActivitiesApi} from "./api/activitiesApi.js";
 import {MongoClient} from "mongodb";
 dotenv.config();
@@ -23,7 +23,7 @@ if(mongodbUrl){
     const mongoDatabase = mongoClient.db(mongoDatabaseName);
 
     mongoClient.connect().then(async () => {
-        app.use("/api/login", LoginApi(mongoDatabase));
+        app.use("/api/users", UsersApi(mongoDatabase));
         app.use("/api/activities", ActivitiesApi(mongoDatabase));
     });
 }

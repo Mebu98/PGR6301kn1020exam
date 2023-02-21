@@ -5,8 +5,8 @@
 
 * [ ] manager
   * [x] create new activity
-  * [ ] edit activity
-  * [ ] delete activity
+  * [x] edit activity
+  * [x] delete activity
   * [ ] delete user
 
 * [ ] tests
@@ -18,6 +18,9 @@
     * [ ] edit activity
     * [ ] delete activity
 
-* [ ] MongoDB
+* [x] sha256 encryption 
+  * no salt though
+  
+* [x] MongoDB
 
 * [ ] Azure

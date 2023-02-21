@@ -2,19 +2,11 @@ import express from "express";
 import {ObjectId} from "mongodb";
 
 
-export function LoginApi(db){
-    const loginApi = express.Router();
+export function UsersApi(db){
+    const usersApi = express.Router();
 
-    const USERS = [
-        {
-            username: "user",
-            name: "userUserson",
-            role: "manager",
-            password: "user"
-        }];
-
-    // Register user
-    loginApi.post("/register", async (req, res) => {
+// Register user
+    usersApi.post("/register", async (req, res) => {
         const {username, name, password} = req.body;
 
         // Check if user exists
@@ -35,7 +27,7 @@ export function LoginApi(db){
     });
 
     //check if user is logged in via cookie
-    loginApi.get("/", async (req, res) => {
+    usersApi.get("/cookie", async (req, res) => {
         const userIdCookie = req.signedCookies.userId;
         if (!userIdCookie) {
             return res.sendStatus(401);
@@ -47,11 +39,11 @@ export function LoginApi(db){
         if (!user) {
             return res.sendStatus(401);
         }
-        res.send(user)
+        res.send({username: user.username, name: user.name, role: user.role})
     });
 
     // Login
-    loginApi.post("/", async (req, res) => {
+    usersApi.post("/login", async (req, res) => {
         const {username, password} = req.body;
 
         const user = await db.collection("users")
@@ -67,12 +59,28 @@ export function LoginApi(db){
     });
 
     // Logout
-    loginApi.delete("/", (req, res) =>{
+    usersApi.delete("/logout", (req, res) =>{
         res.clearCookie("userId");
         res.clearCookie("role");
         res.sendStatus(200);
     });
 
-    return loginApi;
+
+    // get all roles
+    usersApi.get("/roles", async (req, res) => {
+        const roles = await db.collection("users").distinct("role");
+        res.send(roles);
+    });
+
+    // get all users
+    usersApi.get("/all", async (req, res) => {
+        if(req.signedCookies.role !== "manager"){
+            res.sendStatus(401);
+        }
+
+        const users = await db.collection("users").find().toArray();
+        res.send(users);
+    });
+    return usersApi;
 }
 

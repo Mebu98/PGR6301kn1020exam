@@ -4,7 +4,7 @@ import {useLoader} from "./useLoader";
 import {Login} from "./pages/login/login";
 import {Register} from "./pages/login/register";
 import {getJSON} from "./utils/api/getJSON";
-import {Activities} from "./pages/activities/activities";
+import {ListActivities} from "./pages/activities/listActivities";
 import {ManagerPage} from "./pages/manager/managerPage";
 
 const element = document.getElementById("app");
@@ -15,7 +15,7 @@ const root = createRoot(element);
 function LogOut(){
     async function handleLogout(e) {
         e.preventDefault();
-        await fetch("/api/login/", {
+        await fetch("/api/users/logout", {
             method: "DELETE"}).then(() => {
                 window.location.href = "/";
         });
@@ -37,7 +37,8 @@ function ManagerLinks({user}) {
 }
 
 function FrontPage() {
-    const {loading, data} =  useLoader(async () => await getJSON("/api/login"));
+    const {loading, data} =  useLoader(async () =>
+        await getJSON("/api/users/cookie"));
     const user = data;
 
     if(loading){
@@ -52,8 +53,8 @@ function FrontPage() {
                 <div>
                     <h1>Hello {user.name}</h1>
                     <LogOut/>
-                    <Activities />
                     {user.role === "manager" ? <ManagerLinks user={user}/> : null}
+                    <ListActivities user={user} />
                 </div>
                 :
                 <LoginLinks user={user} />}

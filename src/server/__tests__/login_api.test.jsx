@@ -1,6 +1,6 @@
 import request from "supertest";
 import {configureExpress} from "../test_utils.js";
-import {loginApi} from "../api/loginApi.js";
+import {loginApi} from "../api/usersApi.js";
 
 const app = configureExpress();
 

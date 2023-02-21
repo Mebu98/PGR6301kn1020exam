@@ -2,6 +2,7 @@ import React from "react";
 import {useState} from "react";
 import {postJSON} from "../../utils/api/postJSON";
 import {Link} from "react-router-dom";
+import {sha256} from "js-sha256";
 
 function LoginForm() {
     const [username, setUsername] = useState("");
@@ -11,9 +12,13 @@ function LoginForm() {
     async function handleLoginSubmit(e) {
         e.preventDefault();
 
-        await postJSON("api/login", {username, password}).then((res) => {
+        const sha256Password = sha256(password);
+
+        await postJSON("api/users/login", {
+            username, password : sha256Password
+        }).then((res) => {
             if (res === 200){
-                //window.location.href = "/";
+                window.location.href = "/";
             }
             else if (res === 401){
                 alert("Username or password is incorrect");
