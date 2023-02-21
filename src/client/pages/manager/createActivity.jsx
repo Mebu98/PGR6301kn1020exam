@@ -9,7 +9,7 @@ export function CreateActivity() {
     const [response, setResponse] = useState(<div></div>);
 
     const {data, loading , error} = useLoader(
-        async () => await getJSON("/api/login/roles"),
+        async () => await getJSON("/api/users/roles"),
     []);
 
     if(loading){
@@ -25,7 +25,9 @@ export function CreateActivity() {
     async function handleSubmit(e) {
         e.preventDefault();
 
-        // Manager validation is done in the backend via the signed cookie
+        // Manager validation is done in the backend via the signed cookie.
+        // postJSON function doesn't work since it adds "manager/activities" to the url
+        // so I'm using fetch instead.
         await fetch("/api/activities/new", {
             method: "POST",
             headers: {

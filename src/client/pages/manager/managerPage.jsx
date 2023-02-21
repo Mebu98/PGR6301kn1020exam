@@ -26,7 +26,7 @@ export function ManagerPage() {
             <Routes>
                 <Route path={"/activities/new"} element={<CreateActivity/>}></Route>
                 <Route path={"/activities/edit"} element={<ListActivities user={user}/>}></Route>
-                <Route path={"/users/edit"} element={<EditUsers/>}></Route>
+                <Route path={"/users/edit/"} element={<EditUsers/>}></Route>
             </Routes>
         </div>
     );

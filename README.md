@@ -7,7 +7,7 @@
   * [x] create new activity
   * [x] edit activity
   * [x] delete activity
-  * [ ] delete user
+  * [x] delete user
 
 * [ ] tests
   * [ ] loginAPI
@@ -18,7 +18,7 @@
     * [ ] edit activity
     * [ ] delete activity
 
-* [x] sha256 encryption 
+* [x] sha256 password encryption 
   * no salt though
   
 * [x] MongoDB

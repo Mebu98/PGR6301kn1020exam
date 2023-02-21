@@ -37,20 +37,20 @@ export function ListActivities({user}) {
     if (loading) return <p>Loading...</p>;
     if (error) return <p>Error :(</p>;
 
-    function handleLiRemove(_id) {
-        const newList = activitiesList.filter((activity) => activity._id !== _id);
+    function handleLiRemove(id) {
+        const newList = activitiesList.filter((activity) => activity._id !== id);
         setActivitiesList(newList);
     }
 
-    function deleteButton(_id) {
+    function deleteButton(id) {
         return(
             // Only show the delete button if the user is a manager
             // and the current page is the manager activities page
             (user && user.role === "manager" && window.location.pathname === "/manager/activities/edit") ?
             <button className={"delete-activity-button"} onClick={() => {
-                deleteActivity(_id).then((res) => {
+                deleteActivity(id).then((res) => {
                     if (res === 200) {
-                        handleLiRemove(_id);
+                        handleLiRemove(id);
                     } else {
                         console.log("Error deleting activity");
                     }

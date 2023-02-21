@@ -9,7 +9,7 @@ describe("client test suite", () => {
         const element = document.createElement("div");
 
         const root = createRoot(element);
-        act( () => root.render(
+        act(() => root.render(
             <Login />
         ));
 
