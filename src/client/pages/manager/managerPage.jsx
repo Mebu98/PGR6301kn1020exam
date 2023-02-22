@@ -9,7 +9,6 @@ export function ManagerPage() {
     const user = location.state.user;
     return (
         <div>
-            <Link to={"/"}>Home</Link>
             <h1> Welcome to manager section </h1>
             <ul>
                 <li>

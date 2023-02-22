@@ -6,6 +6,7 @@ import {Register} from "./pages/login/register";
 import {getJSON} from "./utils/api/getJSON";
 import {ListActivities} from "./pages/activities/listActivities";
 import {ManagerPage} from "./pages/manager/managerPage";
+import React from "react";
 
 const element = document.getElementById("app");
 const root = createRoot(element);
@@ -47,7 +48,6 @@ function FrontPage() {
 
     return (
         <div>
-            <Link to={"/"}>Home</Link>
             <h1>Hello FrontPage</h1>
             {user ?
                 <div>
@@ -79,6 +79,7 @@ function LoginLinks() {
 function Application() {
   return (
     <BrowserRouter>
+        <Link to={"/"}>Home</Link>
         <Routes>
             <Route path={"/"} element={<FrontPage />}></Route>
             <Route path={"/login/"} element={<Login />}></Route>

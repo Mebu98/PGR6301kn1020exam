@@ -44,7 +44,6 @@ function LoginForm() {
 export function Login(){
     return (
         <div>
-            <Link to={"/"}>Home</Link>
             <h1> Welcome to login </h1>
             <LoginForm />
         </div>

@@ -7,7 +7,6 @@ import {sha256} from "js-sha256";
 export function Register() {
   return (
       <div>
-          <Link to={"/"}>Home</Link>
           <h1> Welcome to register </h1>
           <RegisterForm />
       </div>
