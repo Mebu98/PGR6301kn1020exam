@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "description": "",
   "scripts": {
+    "build": "npm install --include=dev && parcel build index.html",
     "dev": "parcel watch index.html",
     "verify": "jest --coleectCoverage",
     "test": "jest"

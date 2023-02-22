@@ -4,15 +4,23 @@
   "description": "",
   "main": "index.js",
   "scripts": {
+    "build": "npm run build:server && npm run build:client",
+    "build:server": "cd server && npm run build",
+    "build:client": "cd client && npm run build",
+    "dev": "concurrently 'npm:dev:server' 'npm:dev:client'",
     "dev:server": "cd server && npm run dev",
     "dev:client": "cd client && npm run dev",
-    "dev": "concurrently 'npm:dev:server' 'npm:dev:client'",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "npm run test:client && npm run test:server",
+    "test:client": "cd client && npm run test",
+    "test:server": "cd server && npm run test",
+    "prettier:write": "prettier --write **/*.{js,jsx}",
+    "prettier:check": "prettier --check **/*.{js,jsx}"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "concurrently": "^7.6.0"
+    "concurrently": "^7.6.0",
+    "prettier": "^2.7.1"
   }
 }
