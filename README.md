@@ -2,6 +2,13 @@ GITHUB: https://github.com/Mebu98/PGR6301kn1020exam
 
 AZURE: https://pgr6301kn1020.azurewebsites.net/ (might not work...)
 
+
+admin account on azure should be:
+  * username: admin
+  * password: admin
+
+if not one a user can manually be set to "manager" role in the database
+
 ----------------------------------------------
 
 GET endpoints are:
