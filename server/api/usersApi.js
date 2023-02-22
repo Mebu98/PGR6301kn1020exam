@@ -8,7 +8,7 @@ export function UsersApi(db) {
   usersApi.post("/register", async (req, res) => {
     const { username, name, password } = req.body;
 
-    // Check if user exists
+    // Check if username exists
     const users = await db
       .collection("users")
       .find({ username: username })
@@ -33,6 +33,7 @@ export function UsersApi(db) {
   /** check if user is logged in via cookie */
   usersApi.get("/cookie", async (req, res) => {
     const userIdCookie = req.signedCookies.userId;
+
     if (!userIdCookie) {
       return res.sendStatus(401);
     }
@@ -101,13 +102,10 @@ export function UsersApi(db) {
     if (name.length > 0) objForUpdate.name = name;
     if (role.length > 0) objForUpdate.role = role;
 
-    console.log(objForUpdate);
-
     await db
       .collection("users")
       .updateOne({ _id: new ObjectId(id) }, { $set: { ...objForUpdate } })
       .then((response) => {
-        console.log(response);
         if (response.modifiedCount === 1) {
           res.sendStatus(200);
         } else {
