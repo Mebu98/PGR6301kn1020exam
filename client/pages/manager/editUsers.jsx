@@ -82,6 +82,10 @@ function ListUsers() {
           name: newName,
           role: selectedRole,
         }),
+      }).then((res) => {
+        if (res.status === 200) {
+          window.location.reload();
+        }
       });
     }
 

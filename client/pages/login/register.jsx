@@ -1,7 +1,6 @@
 import React from "react";
 import { useState } from "react";
 import { postJSON } from "../../utils/api/postJSON.jsx";
-import { Link } from "react-router-dom";
 import { sha256 } from "js-sha256";
 
 export function Register() {
@@ -43,7 +42,7 @@ function RegisterForm() {
       password: sha256Password,
     }).then((res) => {
       if (res === 200) {
-        //window.location.href = "/";
+        window.location.href = "/login";
       } else if (res === 409) {
         alert("Username already exists");
       } else {

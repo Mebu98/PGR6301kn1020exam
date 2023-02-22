@@ -1,4 +1,4 @@
-/src/client/.parcel-cache/
-/src/client/dist/
-/src/server/.env
-*/package-lock.json
+/client/.parcel-cache/
+/client/dist/
+/server/.env
+package-lock.json

@@ -1,7 +1,6 @@
 import React from "react";
 import { useState } from "react";
 import { postJSON } from "../../utils/api/postJSON";
-import { Link } from "react-router-dom";
 import { sha256 } from "js-sha256";
 
 function LoginForm() {

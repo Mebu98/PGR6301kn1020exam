@@ -19,7 +19,7 @@ const mongodbUrl = process.env.MONGODB_URL;
 
 if (mongodbUrl) {
   const mongoClient = new MongoClient(mongodbUrl);
-  const mongoDatabaseName = process.env.MONGODB_DATABASE || "pg6301exam";
+  const mongoDatabaseName = process.env.MONGODB_DATABASE || "kn1020_pg6301exam";
   const mongoDatabase = mongoClient.db(mongoDatabaseName);
 
   mongoClient.connect().then(async () => {

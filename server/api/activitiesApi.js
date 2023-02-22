@@ -4,7 +4,7 @@ import { ObjectId } from "mongodb";
 export function ActivitiesApi(db) {
   const activitiesApi = express.Router();
 
-  // Get all activities
+  /** Get all activities */
   activitiesApi.get("/", (req, res) => {
     if (db) {
       db.collection("activities")
@@ -18,7 +18,7 @@ export function ActivitiesApi(db) {
     }
   });
 
-  // Upload new activity
+  /** Upload new activity */
   activitiesApi.post("/new", (req, res) => {
     // See if uploader is manager
     if (req.signedCookies.role !== "manager") {
@@ -45,7 +45,7 @@ export function ActivitiesApi(db) {
     }
   });
 
-  // Delete activity
+  /** Delete activity */
   activitiesApi.delete("/:id", (req, res) => {
     // See if uploader is manager
     if (req.signedCookies.role !== "manager") {
