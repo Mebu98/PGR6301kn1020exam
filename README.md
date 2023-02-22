@@ -10,7 +10,7 @@ admin account on azure should be:
 if not one a user can manually be set to "manager" role in the database
 
 Video if all else fails: https://www.youtube.com/watch?v=YgyVKtsyRjw&feature=youtu.be
-
+ 
 ----------------------------------------------
 
 GET endpoints are:
