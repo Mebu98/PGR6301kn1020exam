@@ -24,7 +24,9 @@ function ListUsers() {
           .filter((role, index, self) => self.indexOf(role) === index)
       );
     }
-  }, [data]);
+  }, [users]);
+
+  console.log(roles);
 
   if (loading) return <p>Loading...</p>;
   if (error) return <p>Error :(</p>;
